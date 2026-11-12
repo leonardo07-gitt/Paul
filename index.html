@@ -1,0 +1,881 @@
+
+<html lang="es" class="h-full scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para ti, Mishel... 11:11 ❤️</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Great+Vibes&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        burgundyDeep: '#1a050a',
+                        burgundyMid: '#2d0913',
+                        burgundyRich: '#591124',
+                        roseGold: '#f4c2c2',
+                        roseGoldDark: '#e5a9a9',
+                        creamSoft: '#fff5f7',
+                        candleGold: '#ffd27d',
+                    },
+                    fontFamily: {
+                        vibes: ['Great Vibes', 'cursive'],
+                        brush: ['Alex Brush', 'cursive'],
+                        poem: ['Cormorant Garamond', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background: radial-gradient(circle at 50% 15%, #4a0e1e 0%, #2d0913 45%, #1a050a 100%);
+            color: #fff5f7;
+            min-height: 100vh;
+            overflow-x: hidden;
+            user-select: none;
+        }
+
+        #romanticCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        /* Pantalla de entrada íntima */
+        #introOverlay {
+            background: radial-gradient(circle at center, #380b17 0%, #1a050a 100%);
+            transition: opacity 1.4s cubic-bezier(0.4, 0, 0.2, 1), visibility 1.4s;
+        }
+
+        /* Latido de corazón realista */
+        .heartbeat {
+            animation: heartBeat 1.6s infinite ease-in-out;
+        }
+
+        @keyframes heartBeat {
+            0% { transform: scale(1); filter: drop-shadow(0 0 12px rgba(244, 194, 194, 0.4)); }
+            14% { transform: scale(1.18); filter: drop-shadow(0 0 25px rgba(255, 105, 135, 0.8)); }
+            28% { transform: scale(1.04); }
+            42% { transform: scale(1.14); filter: drop-shadow(0 0 22px rgba(255, 210, 125, 0.7)); }
+            70% { transform: scale(1); filter: drop-shadow(0 0 12px rgba(244, 194, 194, 0.4)); }
+            100% { transform: scale(1); }
+        }
+
+        /* Tarjeta aterciopelada con luz de vela */
+        .velvet-card {
+            background: linear-gradient(145deg, rgba(45, 9, 19, 0.78), rgba(26, 5, 10, 0.88));
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(244, 194, 194, 0.22);
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.85),
+                        inset 0 0 45px rgba(255, 210, 125, 0.06),
+                        0 0 50px rgba(89, 17, 36, 0.5);
+        }
+
+        /* Resplandor cálido de vela */
+        .candle-glow {
+            text-shadow: 0 0 12px rgba(255, 210, 125, 0.65),
+                         0 0 28px rgba(244, 194, 194, 0.45),
+                         0 0 45px rgba(225, 29, 72, 0.35);
+            animation: candleFlicker 4s infinite alternate ease-in-out;
+        }
+
+        @keyframes candleFlicker {
+            0%, 100% { opacity: 0.94; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.01); }
+        }
+
+        /* Aparición poética gradual de cada estrofa */
+        .stanza {
+            opacity: 0;
+            transform: translateY(22px);
+            transition: opacity 1.5s ease-out, transform 1.5s ease-out;
+        }
+
+        .stanza.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Scrollbar sutil y elegante */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #1a050a; }
+        ::-webkit-scrollbar-thumb { background: rgba(244, 194, 194, 0.35); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(244, 194, 194, 0.6); }
+    </style>
+</head>
+<body class="font-sans min-h-screen flex flex-col justify-between relative selection:bg-roseGold selection:text-burgundyDeep">
+
+    <!-- Canvas de Pétalos 3D, Bokeh de Velas, Mariposas y Corazones al Tocar -->
+    <canvas id="romanticCanvas"></canvas>
+
+    <!-- 1. PANTALLA DE ENTRADA ÍNTIMA -->
+    <div id="introOverlay" class="fixed inset-0 z-50 flex flex-col items-center justify-center px-6 text-center">
+        <!-- Luz ambiental cálida detrás del corazón -->
+        <div class="absolute w-72 h-72 bg-rose-600/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute w-48 h-48 bg-candleGold/15 rounded-full blur-2xl pointer-events-none"></div>
+
+        <div class="relative z-10 flex flex-col items-center max-w-md">
+            <!-- Corazón latiendo -->
+            <div class="mb-6 heartbeat text-rose-400">
+                <svg class="w-20 h-20 sm:w-24 sm:h-24 fill-current" viewBox="0 0 24 24">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+            </div>
+
+            <p class="text-xs sm:text-sm uppercase tracking-[0.35em] text-candleGold/90 mb-2 font-light">
+                Un instante eterno
+            </p>
+            
+            <h1 class="font-vibes text-5xl sm:text-6xl text-creamSoft candle-glow mb-8">
+                Para ti, Mishel... 11:11
+            </h1>
+
+            <button onclick="openHeart()" class="group relative px-8 py-4 rounded-full bg-gradient-to-r from-burgundyRich via-rose-900 to-burgundyRich border border-roseGold/50 text-creamSoft font-poem italic text-xl sm:text-2xl tracking-wider shadow-[0_0_30px_rgba(244,194,194,0.25)] transition-all duration-500 hover:scale-105 hover:border-candleGold hover:shadow-[0_0_40px_rgba(255,210,125,0.45)] active:scale-95 flex items-center gap-3">
+                <span>Abrir mi corazón</span>
+                <i data-lucide="heart" class="w-5 h-5 text-roseGold group-hover:fill-roseGold transition-all duration-300"></i>
+            </button>
+
+            <p class="mt-6 text-xs text-roseGold/60 font-light tracking-widest">
+                Toca para encender la melodía y nuestras palabras
+            </p>
+        </div>
+    </div>
+
+    <!-- BARRA SUPERIOR DISCRETA -->
+    <header class="relative z-20 w-full max-w-5xl mx-auto px-5 sm:px-8 pt-6 pb-2 flex flex-wrap justify-between items-center gap-3">
+        <div class="flex items-center gap-2.5">
+            <span class="w-2 h-2 rounded-full bg-candleGold animate-ping"></span>
+            <span class="text-xs uppercase tracking-[0.25em] text-roseGold/80 font-light">
+                Para Mishel &bull; 11/11
+            </span>
+        </div>
+
+        <!-- Controles discretos de música: Melodía inspirada + Subir MP3 local + Enlace YouTube -->
+        <div class="flex flex-wrap items-center gap-2">
+            <!-- Input oculto para archivo MP3 local -->
+            <input type="file" id="localMp3Input" accept="audio/*" class="hidden" onchange="handleLocalAudioUpload(event)">
+            <audio id="localAudioPlayer" loop></audio>
+
+            <!-- Botón principal de reproducción -->
+            <button id="musicControlBtn" onclick="toggleMusic()" class="flex items-center gap-2 bg-burgundyMid/75 hover:bg-burgundyRich/85 backdrop-blur-md text-roseGold border border-roseGold/30 px-3.5 py-2 rounded-full text-xs tracking-wider transition-all duration-300 hover:border-candleGold/60 shadow-lg" title="Reproducir o pausar música">
+                <i id="musicIcon" data-lucide="volume-2" class="w-4 h-4 text-candleGold"></i>
+                <span id="musicLabel">Quiero quedarme en ti</span>
+            </button>
+
+            <!-- Botón discreto para cargar MP3 original -->
+            <button class="flex items-center gap-1.5 bg-burgundyMid/65 hover:bg-burgundyRich/85 backdrop-blur-md text-roseGold/90 border border-roseGold/25 px-3 py-2 rounded-full text-xs tracking-wider transition-all duration-300 hover:border-candleGold/60 shadow-lg" title="Seleccionar archivo MP3 original desde tu dispositivo">
+                <i data-lucide="upload" class="w-3.5 h-3.5 text-candleGold"></i>
+                <span class="hidden sm:inline"><a href="https://open.spotify.com/track/3JBLdVJrLFymAihS70d395?si=sWUP9oGaTfCwRyBzK-JCEw&utm_source=whatsapp" target="_blank">Spotify</a></span>
+            </button>
+
+            <!-- Enlace directo a YouTube -->
+            <a href="https://youtu.be/PVFmxb4M-PQ?si=nmTZMN2IIlKBFW5M" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1.5 bg-burgundyMid/65 hover:bg-burgundyRich/85 backdrop-blur-md text-roseGold/90 border border-roseGold/25 px-3 py-2 rounded-full text-xs tracking-wider transition-all duration-300 hover:border-candleGold/60 shadow-lg" title="Escuchar canción original en YouTube">
+                <i data-lucide="music" class="w-3.5 h-3.5 text-rose-400"></i>
+                <span class="hidden md:inline">YouTube</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main id="mainContent" class="relative z-10 flex-grow flex flex-col items-center justify-center px-4 sm:px-6 py-6 opacity-0 transition-opacity duration-1000">
+        
+        <!-- SELLO BRILLANTE 11:11 -->
+        <div class="text-center mb-6 sm:mb-8">
+            <div class="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-burgundyMid/80 border border-candleGold/40 shadow-[0_0_25px_rgba(255,210,125,0.2)] mb-4">
+                <i data-lucide="sparkles" class="w-4 h-4 text-candleGold"></i>
+                <span class="font-poem italic text-lg sm:text-xl text-candleGold tracking-[0.25em] font-semibold">
+                    11 : 11
+                </span>
+                <i data-lucide="sparkles" class="w-4 h-4 text-candleGold"></i>
+            </div>
+
+            <h1 class="font-vibes text-6xl sm:text-7xl md:text-8xl text-transparent bg-clip-text bg-gradient-to-b from-creamSoft via-roseGold to-roseGoldDark candle-glow py-1">
+                Mishel
+            </h1>
+            <p class="text-xs sm:text-sm uppercase tracking-[0.3em] text-roseGold/75 mt-1 font-light">
+                El arte de quererte
+            </p>
+        </div>
+
+        <!-- TARJETA DEL POEMA -->
+        <article class="w-full max-w-2xl velvet-card rounded-[2rem] p-7 sm:p-11 md:p-14 relative overflow-hidden">
+            
+            <!-- Reflejos cálidos de velas en las esquinas -->
+            <div class="absolute -top-20 -left-20 w-56 h-56 bg-candleGold/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-20 -right-20 w-56 h-56 bg-rose-600/15 rounded-full blur-3xl pointer-events-none"></div>
+
+            <!-- Ornamento superior -->
+            <div class="flex justify-center items-center gap-3 mb-8 text-candleGold/70">
+                <div class="h-[1px] w-16 bg-gradient-to-r from-transparent to-roseGold/40"></div>
+                <i data-lucide="heart" class="w-4 h-4 fill-roseGold/40 text-roseGold"></i>
+                <div class="h-[1px] w-16 bg-gradient-to-l from-transparent to-roseGold/40"></div>
+            </div>
+
+            <!-- POEMA EXACTO EN ESTROFAS CON APARICIÓN GRADUAL -->
+            <div class="font-poem italic text-xl sm:text-2xl md:text-[1.65rem] leading-[1.85] sm:leading-[1.95] text-creamSoft/95 space-y-7 text-center">
+                
+                <!-- Estrofa 1 -->
+                <p id="stanza-1" class="stanza text-candleGold/95 font-medium">
+                    ¿Cuál es el arte de quererte?<br>
+                    Hoy es 11:11, el día 11 del mes 11, y mi deseo será que siempre estemos juntos en esta vida.
+                </p>
+
+                <!-- Estrofa 2 -->
+                <p id="stanza-2" class="stanza">
+                    ¿Cuál es el arte de quererte?<br>
+                    Cuando te tengo de frente no sé cómo expresarte cuál es este arte, pero cuando estoy en mi habitación, con solo pensarte, ya me pregunto cuál será el arte de quererte.
+                </p>
+
+                <!-- Estrofa 3 -->
+                <p id="stanza-3" class="stanza text-roseGold">
+                    Porque cuando estoy a tu lado todo se vuelve impresionante y fascinante, ni hablar de lo que siento al abrazarte y besarte.
+                </p>
+
+                <!-- Estrofa 4 -->
+                <p id="stanza-4" class="stanza">
+                    Pero ¿por qué?, ¿por qué no paro de pensarte? Quizá ese es el arte de quererte: que en ningún momento salgas de mi mente, sentir mariposas cada vez que te tengo de frente y, al mirarte a los ojos, solamente quiero decirte que siempre voy a quererte más de lo que puedas imaginarte.
+                </p>
+
+            </div>
+
+            <!-- Ornamento inferior -->
+            <div class="mt-10 flex justify-center items-center gap-3 text-roseGold/60">
+                <div class="h-[1px] w-20 bg-gradient-to-r from-transparent to-candleGold/40"></div>
+                <span class="font-vibes text-2xl text-candleGold">11:11</span>
+                <div class="h-[1px] w-20 bg-gradient-to-l from-transparent to-candleGold/40"></div>
+            </div>
+        </article>
+
+        <!-- BOTÓN INTERACTIVO "SELLAR NUESTRO DESEO 11:11" -->
+        <div class="mt-9 sm:mt-11 flex flex-col items-center z-20">
+            <button id="sealWishBtn" onclick="sealOurWish(event)" class="group relative px-8 sm:px-10 py-4 rounded-full bg-gradient-to-r from-burgundyRich via-rose-800 to-burgundyRich border border-candleGold/60 text-creamSoft font-poem italic text-xl sm:text-2xl tracking-wide shadow-[0_10px_35px_rgba(225,29,72,0.35)] transition-all duration-500 hover:scale-105 hover:shadow-[0_0_45px_rgba(255,210,125,0.6)] active:scale-95 flex items-center gap-3 overflow-hidden">
+                <span class="absolute inset-0 bg-gradient-to-r from-candleGold/20 via-roseGold/20 to-candleGold/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></span>
+                <i data-lucide="sparkles" class="w-5 h-5 text-candleGold group-hover:rotate-12 transition-transform"></i>
+                <span class="relative z-10">Sellar nuestro deseo 11:11</span>
+                <i data-lucide="heart" class="w-5 h-5 text-roseGold fill-roseGold/70 group-hover:scale-125 transition-transform"></i>
+            </button>
+
+            <!-- DEDICATORIA FINAL FLOTANTE (Oculta hasta sellar el deseo) -->
+            <div id="finalDedication" class="mt-7 max-w-lg text-center opacity-0 transform translate-y-4 transition-all duration-1000 pointer-events-none">
+                <div class="inline-block px-7 py-4 rounded-2xl bg-burgundyMid/85 border border-candleGold/50 backdrop-blur-md shadow-[0_0_40px_rgba(255,210,125,0.3)]">
+                    <p class="font-vibes text-3xl sm:text-4xl text-candleGold candle-glow">
+                        Siempre juntos en esta vida, Mishel ❤️
+                    </p>
+                    <p class="text-xs text-roseGold/80 tracking-[0.2em] uppercase mt-1 font-light">
+                        Deseo sellado en el universo &bull; 11:11
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- PIE DE PÁGINA ÍNTIMO -->
+    <footer class="relative z-10 text-center py-6 px-4 text-xs text-roseGold/50 tracking-[0.25em] uppercase font-light">
+        Toca cualquier lugar para dejar un destello de amor &bull; Mishel
+    </footer>
+
+    <!-- SCRIPTS DE ANIMACIÓN ROMÁNTICA Y SÍNTESIS MUSICAL -->
+    <script>
+        lucide.createIcons();
+
+        // ==========================================
+        // 1. MOTOR VISUAL EN CANVAS (PÉTALOS, BOKEH, MARIPOSAS, CORAZONES)
+        // ==========================================
+        const canvas = document.getElementById('romanticCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+
+        // Luces de velas desenfocadas (Bokeh cálido)
+        class CandleBokeh {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.radius = Math.random() * 35 + 15;
+                this.vx = (Math.random() - 0.5) * 0.25;
+                this.vy = -Math.random() * 0.3 - 0.1;
+                this.alpha = Math.random() * 0.14 + 0.04;
+                this.pulseSpeed = Math.random() * 0.02 + 0.005;
+                this.phase = Math.random() * Math.PI * 2;
+                this.color = Math.random() > 0.4 ? '255, 210, 125' : '244, 194, 194';
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.phase += this.pulseSpeed;
+                if (this.y < -60) {
+                    this.y = height + 60;
+                    this.x = Math.random() * width;
+                }
+            }
+            draw() {
+                const currentAlpha = this.alpha + Math.sin(this.phase) * 0.04;
+                const grad = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius);
+                grad.addColorStop(0, `rgba(${this.color}, ${Math.max(0, currentAlpha)})`);
+                grad.addColorStop(1, `rgba(${this.color}, 0)`);
+                ctx.fillStyle = grad;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        // Pétalos de rosa rojos y rosados cayendo con rotación 3D
+        class RosePetal {
+            constructor(randomY = true) {
+                this.reset(randomY);
+            }
+            reset(randomY = false) {
+                this.x = Math.random() * width;
+                this.y = randomY ? Math.random() * height : -30;
+                this.size = Math.random() * 9 + 7;
+                this.speedY = Math.random() * 1.1 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.8;
+                this.swayAngle = Math.random() * Math.PI * 2;
+                this.swaySpeed = Math.random() * 0.025 + 0.01;
+                this.rotX = Math.random() * Math.PI * 2;
+                this.rotY = Math.random() * Math.PI * 2;
+                this.rotZ = Math.random() * Math.PI * 2;
+                this.rotSpeed = (Math.random() - 0.5) * 0.04;
+                const palette = ['#9e1936', '#c92a49', '#e56b81', '#f4c2c2', '#7a1026'];
+                this.color = palette[Math.floor(Math.random() * palette.length)];
+                this.alpha = Math.random() * 0.45 + 0.45;
+            }
+            update() {
+                this.swayAngle += this.swaySpeed;
+                this.x += this.speedX + Math.sin(this.swayAngle) * 0.6;
+                this.y += this.speedY;
+                this.rotX += this.rotSpeed;
+                this.rotY += this.rotSpeed * 1.2;
+                this.rotZ += this.rotSpeed * 0.8;
+
+                if (this.y > height + 30) {
+                    this.reset(false);
+                }
+            }
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotZ);
+                // Simulación de rotación 3D mediante escala oscilante
+                const scaleX = Math.cos(this.rotY);
+                const scaleY = Math.sin(this.rotX) * 0.5 + 0.75;
+                ctx.scale(scaleX || 0.1, scaleY);
+                ctx.globalAlpha = this.alpha;
+
+                ctx.fillStyle = this.color;
+                ctx.shadowBlur = 6;
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.35)';
+
+                // Forma orgánica de pétalo de rosa
+                ctx.beginPath();
+                ctx.moveTo(0, -this.size);
+                ctx.bezierCurveTo(this.size * 1.1, -this.size * 0.6, this.size * 0.9, this.size * 0.8, 0, this.size);
+                ctx.bezierCurveTo(-this.size * 0.9, this.size * 0.8, -this.size * 1.1, -this.size * 0.6, 0, -this.size);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        // Mariposas luminosas color oro rosado
+        class RoseGoldButterfly {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.size = Math.random() * 8 + 7;
+                this.angle = Math.random() * Math.PI * 2;
+                this.speed = Math.random() * 0.8 + 0.4;
+                this.wingPhase = Math.random() * Math.PI * 2;
+                this.wingSpeed = Math.random() * 0.16 + 0.12;
+                this.color = Math.random() > 0.35 ? '#f4c2c2' : '#ffd27d';
+            }
+            update() {
+                this.angle += (Math.random() - 0.5) * 0.08;
+                this.x += Math.cos(this.angle) * this.speed;
+                this.y += Math.sin(this.angle) * this.speed - 0.15;
+                this.wingPhase += this.wingSpeed;
+
+                if (this.x < -30) this.x = width + 30;
+                if (this.x > width + 30) this.x = -30;
+                if (this.y < -30) this.y = height + 30;
+                if (this.y > height + 30) this.y = -30;
+            }
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.angle + Math.PI / 2);
+                ctx.globalAlpha = 0.78;
+                ctx.fillStyle = this.color;
+                ctx.shadowBlur = 12;
+                ctx.shadowColor = this.color;
+
+                const flap = Math.abs(Math.sin(this.wingPhase)) * 0.85 + 0.15;
+
+                // Ala superior izquierda
+                ctx.beginPath();
+                ctx.ellipse(-this.size * 0.55 * flap, -this.size * 0.2, this.size * 0.65 * flap, this.size * 0.85, -0.3, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Ala superior derecha
+                ctx.beginPath();
+                ctx.ellipse(this.size * 0.55 * flap, -this.size * 0.2, this.size * 0.65 * flap, this.size * 0.85, 0.3, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Alas inferiores sutiles
+                ctx.beginPath();
+                ctx.ellipse(-this.size * 0.4 * flap, this.size * 0.45, this.size * 0.45 * flap, this.size * 0.55, 0.3, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.ellipse(this.size * 0.4 * flap, this.size * 0.45, this.size * 0.45 * flap, this.size * 0.55, -0.3, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.restore();
+            }
+        }
+
+        // Partículas de corazones y destellos al hacer clic / sellar deseo
+        class LoveSpark {
+            constructor(x, y, forceHeart = null) {
+                this.x = x;
+                this.y = y;
+                this.isHeart = forceHeart !== null ? forceHeart : Math.random() > 0.35;
+                this.size = this.isHeart ? Math.random() * 12 + 10 : Math.random() * 3.5 + 1.5;
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = Math.random() * 2.8 + 0.8;
+                this.vx = Math.cos(angle) * velocity;
+                this.vy = Math.sin(angle) * velocity - 1.2;
+                this.alpha = 1;
+                this.decay = Math.random() * 0.014 + 0.008;
+                this.color = this.isHeart ? (Math.random() > 0.4 ? '#ff6b8b' : '#f4c2c2') : '#ffd27d';
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.vy -= 0.015; // Flotan suavemente hacia arriba
+                this.alpha -= this.decay;
+            }
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = Math.max(0, this.alpha);
+                ctx.fillStyle = this.color;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = this.color;
+
+                if (this.isHeart) {
+                    ctx.font = `${this.size}px serif`;
+                    ctx.fillText('♥', this.x - this.size / 2, this.y + this.size / 2);
+                } else {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                ctx.restore();
+            }
+        }
+
+        const bokehLights = Array.from({ length: 16 }, () => new CandleBokeh());
+        const rosePetals = Array.from({ length: 28 }, () => new RosePetal(true));
+        const butterflies = Array.from({ length: 11 }, () => new RoseGoldButterfly());
+        let sparks = [];
+
+        function renderScene() {
+            ctx.clearRect(0, 0, width, height);
+
+            bokehLights.forEach(b => { b.update(); b.draw(); });
+            rosePetals.forEach(p => { p.update(); p.draw(); });
+            butterflies.forEach(bf => { bf.update(); bf.draw(); });
+
+            for (let i = sparks.length - 1; i >= 0; i--) {
+                sparks[i].update();
+                sparks[i].draw();
+                if (sparks[i].alpha <= 0) {
+                    sparks.splice(i, 1);
+                }
+            }
+
+            requestAnimationFrame(renderScene);
+        }
+
+        renderScene();
+
+        // Al hacer clic o tocar cualquier parte de la pantalla brotan corazones y destellos
+        function spawnTouchLove(x, y, count = 12) {
+            for (let i = 0; i < count; i++) {
+                sparks.push(new LoveSpark(x, y));
+            }
+        }
+
+        document.addEventListener('click', (e) => {
+            spawnTouchLove(e.clientX, e.clientY, 10);
+        });
+
+        document.addEventListener('touchstart', (e) => {
+            if (e.touches && e.touches.length > 0) {
+                const touch = e.touches[0];
+                spawnTouchLove(touch.clientX, touch.clientY, 10);
+            }
+        }, { passive: true });
+
+        // ==========================================
+        // 2. EXPERIENCIA DE ENTRADA Y REVELACIÓN POÉTICA
+        // ==========================================
+        function openHeart() {
+            const overlay = document.getElementById('introOverlay');
+            const mainContent = document.getElementById('mainContent');
+
+            // Iniciar música romántica
+            startRomanticMusic();
+
+            // Lluvia inicial de corazones desde el centro
+            spawnTouchLove(width / 2, height / 2, 35);
+
+            // Desvanecer pantalla inicial
+            overlay.style.opacity = '0';
+            overlay.style.visibility = 'hidden';
+
+            // Mostrar contenido principal
+            mainContent.classList.remove('opacity-0');
+            mainContent.classList.add('opacity-100');
+
+            // Revelar estrofas con ritmo poético cálido
+            const stanzas = ['stanza-1', 'stanza-2', 'stanza-3', 'stanza-4'];
+            stanzas.forEach((id, idx) => {
+                setTimeout(() => {
+                    const el = document.getElementById(id);
+                    if (el) el.classList.add('visible');
+                }, 700 + idx * 1400);
+            });
+        }
+
+        // ==========================================
+        // 3. SELLAR NUESTRO DESEO 11:11
+        // ==========================================
+        function sealOurWish(e) {
+            e.stopPropagation();
+
+            // Intensificar pétalos temporalmente
+            for (let i = 0; i < 25; i++) {
+                rosePetals.push(new RosePetal(false));
+            }
+            if (rosePetals.length > 65) {
+                rosePetals.splice(0, 25);
+            }
+
+            // Lluvia masiva de corazones y destellos por toda la pantalla
+            for (let burst = 0; burst < 6; burst++) {
+                setTimeout(() => {
+                    const rx = Math.random() * width * 0.8 + width * 0.1;
+                    const ry = Math.random() * height * 0.6 + height * 0.2;
+                    spawnTouchLove(rx, ry, 24);
+                }, burst * 220);
+            }
+
+            // Mostrar dedicatoria final flotante
+            const dedication = document.getElementById('finalDedication');
+            dedication.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
+            dedication.classList.add('opacity-100', 'translate-y-0');
+
+            // Acorde celestial extra si la música está activa
+            if (isPlaying && audioCtx) {
+                playCelestialChord();
+            }
+        }
+
+        // ==========================================
+        // 4. MELODÍA ROMÁNTICA DE PIANO Y CUERDAS (WEB AUDIO API)
+        // ==========================================
+        // 4. MELODÍA ROMÁNTICA INSPIRADA EN "QUIERO QUEDARME EN TI" (LA SUPREMA CORTE)
+        // ==========================================
+        let audioCtx = null;
+        let isPlaying = false;
+        let isUsingLocalAudio = false;
+        let melodyInterval = null;
+        let stepIndex = 0;
+
+        const localAudioPlayer = document.getElementById('localAudioPlayer');
+
+        // Progresión estilo salsa romántica en Fa Mayor / Re Menor (Fmaj7 - Dm7 - Bbmaj7 - C7sus4/C7)
+        // Tempo aproximado ~86 BPM (corcheas de 348ms) con montuno suave, bajo tumbao y melodía expresiva
+        const salsaRomanceProgression = [
+            {
+                // Compás 1: Fmaj7 ("Quiero quedarme en ti...")
+                bass:   [87.31, 0, 0, 130.81, 0, 0, 110.00, 0],
+                piano:  [
+                    [349.23, 440.00], [], [523.25], [440.00, 523.25],
+                    [], [349.23, 440.00], [523.25], []
+                ],
+                lead:   [659.25, 0, 587.33, 523.25, 0, 440.00, 523.25, 0],
+                pad:    [174.61, 220.00, 261.63]
+            },
+            {
+                // Compás 2: Dm7
+                bass:   [73.42, 0, 0, 110.00, 0, 0, 98.00, 0],
+                piano:  [
+                    [293.66, 349.23], [], [440.00], [349.23, 440.00],
+                    [], [293.66, 349.23], [523.25], []
+                ],
+                lead:   [587.33, 0, 523.25, 440.00, 0, 392.00, 440.00, 0],
+                pad:    [146.83, 174.61, 220.00]
+            },
+            {
+                // Compás 3: Bbmaj7
+                bass:   [116.54, 0, 0, 87.31, 0, 0, 98.00, 0],
+                piano:  [
+                    [233.08, 293.66], [], [349.23], [293.66, 440.00],
+                    [], [233.08, 349.23], [440.00], []
+                ],
+                lead:   [466.16, 0, 523.25, 587.33, 0, 523.25, 440.00, 0],
+                pad:    [116.54, 174.61, 220.00]
+            },
+            {
+                // Compás 4: C7sus4 -> C7 (Resolución romántica)
+                bass:   [130.81, 0, 0, 98.00, 0, 0, 110.00, 0],
+                piano:  [
+                    [261.63, 349.23], [], [392.00], [261.63, 329.63],
+                    [], [392.00, 466.16], [329.63], []
+                ],
+                lead:   [392.00, 0, 440.00, 466.16, 0, 523.25, 587.33, 0],
+                pad:    [130.81, 196.00, 233.08]
+            }
+        ];
+
+        function handleLocalAudioUpload(event) {
+            const file = event.target.files && event.target.files[0];
+            if (!file) return;
+
+            // Detener sintetizador si estaba sonando
+            if (melodyInterval) {
+                clearInterval(melodyInterval);
+                melodyInterval = null;
+            }
+
+            const fileUrl = URL.createObjectURL(file);
+            localAudioPlayer.src = fileUrl;
+            localAudioPlayer.volume = 0.75;
+            localAudioPlayer.play().then(() => {
+                isUsingLocalAudio = true;
+                isPlaying = true;
+                updateMusicUI();
+                spawnTouchLove(width / 2, 80, 18);
+            }).catch(() => {
+                isUsingLocalAudio = true;
+                isPlaying = false;
+                updateMusicUI();
+            });
+        }
+
+        function startRomanticMusic() {
+            if (isUsingLocalAudio) {
+                localAudioPlayer.play();
+                isPlaying = true;
+                updateMusicUI();
+                return;
+            }
+
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            if (!isPlaying) {
+                isPlaying = true;
+                updateMusicUI();
+                playNextRomanticStep();
+                melodyInterval = setInterval(playNextRomanticStep, 345);
+            }
+        }
+
+        function toggleMusic() {
+            if (isUsingLocalAudio) {
+                if (isPlaying) {
+                    localAudioPlayer.pause();
+                    isPlaying = false;
+                } else {
+                    localAudioPlayer.play();
+                    isPlaying = true;
+                }
+                updateMusicUI();
+                return;
+            }
+
+            if (!audioCtx) {
+                startRomanticMusic();
+                return;
+            }
+            if (isPlaying) {
+                isPlaying = false;
+                clearInterval(melodyInterval);
+            } else {
+                audioCtx.resume();
+                isPlaying = true;
+                playNextRomanticStep();
+                melodyInterval = setInterval(playNextRomanticStep, 345);
+            }
+            updateMusicUI();
+        }
+
+        function updateMusicUI() {
+            const label = document.getElementById('musicLabel');
+            const icon = document.getElementById('musicIcon');
+            if (isPlaying) {
+                label.textContent = isUsingLocalAudio ? 'Canción original' : 'Quiero quedarme en ti';
+                icon.setAttribute('data-lucide', 'volume-2');
+            } else {
+                label.textContent = 'Reanudar música';
+                icon.setAttribute('data-lucide', 'volume-x');
+            }
+            lucide.createIcons();
+        }
+
+        function playNextRomanticStep() {
+            if (!isPlaying || !audioCtx || isUsingLocalAudio) return;
+
+            const now = audioCtx.currentTime;
+            const barIdx = Math.floor(stepIndex / 8) % salsaRomanceProgression.length;
+            const eighthPos = stepIndex % 8;
+            const bar = salsaRomanceProgression[barIdx];
+
+            // Pad romántico suave al inicio de cada compás
+            if (eighthPos === 0) {
+                playWarmStrings(bar.pad[0], bar.pad[1], now);
+            }
+
+            // Bajo estilo tumbao suave (síncopa característica en tiempo 1, 2-y, 4)
+            const bassFreq = bar.bass[eighthPos];
+            if (bassFreq > 0) {
+                playTumbaoBass(bassFreq, now);
+            }
+
+            // Montuno romántico en piano eléctrico / acústico cálido
+            const chordNotes = bar.piano[eighthPos];
+            if (chordNotes && chordNotes.length > 0) {
+                chordNotes.forEach(freq => {
+                    playPianoNote(freq, now, 0.036, 1.4);
+                });
+            }
+
+            // Línea melódica dulce inspirada en el fraseo romántico
+            const leadFreq = bar.lead[eighthPos];
+            if (leadFreq > 0) {
+                playPianoNote(leadFreq, now, 0.052, 2.2);
+            }
+
+            stepIndex++;
+        }
+
+        function playTumbaoBass(freq, startTime) {
+            const osc = audioCtx.createOscillator();
+            const filter = audioCtx.createBiquadFilter();
+            const gain = audioCtx.createGain();
+
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, startTime);
+
+            filter.type = 'lowpass';
+            filter.frequency.setValueAtTime(280, startTime);
+
+            gain.gain.setValueAtTime(0.0001, startTime);
+            gain.gain.linearRampToValueAtTime(0.075, startTime + 0.03);
+            gain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.85);
+
+            osc.connect(filter);
+            filter.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start(startTime);
+            osc.stop(startTime + 0.9);
+        }
+
+        function playPianoNote(freq, startTime, volume, duration = 2.4) {
+            const osc = audioCtx.createOscillator();
+            const overtone = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, startTime);
+
+            // Armónico suave estilo Rhodes / piano romántico
+            overtone.type = 'triangle';
+            overtone.frequency.setValueAtTime(freq * 2, startTime);
+
+            const overtoneGain = audioCtx.createGain();
+            overtoneGain.gain.setValueAtTime(0.14, startTime);
+
+            gain.gain.setValueAtTime(0.0001, startTime);
+            gain.gain.linearRampToValueAtTime(volume, startTime + 0.04);
+            gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+
+            osc.connect(gain);
+            overtone.connect(overtoneGain);
+            overtoneGain.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start(startTime);
+            overtone.start(startTime);
+            osc.stop(startTime + duration + 0.1);
+            overtone.stop(startTime + duration + 0.1);
+        }
+
+        function playWarmStrings(bassFreq, harmonyFreq, startTime) {
+            [bassFreq, harmonyFreq].forEach((freq, i) => {
+                const osc = audioCtx.createOscillator();
+                const filter = audioCtx.createBiquadFilter();
+                const gain = audioCtx.createGain();
+
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(freq, startTime);
+
+                filter.type = 'lowpass';
+                filter.frequency.setValueAtTime(380, startTime);
+
+                const targetVol = i === 0 ? 0.02 : 0.014;
+                gain.gain.setValueAtTime(0.0001, startTime);
+                gain.gain.linearRampToValueAtTime(targetVol, startTime + 0.7);
+                gain.gain.exponentialRampToValueAtTime(0.0001, startTime + 2.9);
+
+                osc.connect(filter);
+                filter.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                osc.start(startTime);
+                osc.stop(startTime + 3.0);
+            });
+        }
+
+        function playCelestialChord() {
+            const now = audioCtx.currentTime;
+            [349.23, 440.00, 523.25, 659.25, 880.00].forEach((f, idx) => {
+                playPianoNote(f, now + idx * 0.09, 0.052, 2.8);
+            });
+        }
+    </script>
+</body>
+</html>
